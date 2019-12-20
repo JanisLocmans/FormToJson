@@ -5,17 +5,30 @@ namespace App\Handlers;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Routing\UrlGenerator;
+use Illuminate\Support\Facades\File;
+use Psy\Util\Json;
 
 
 class FormToJsonHandler {
 
+    private $data_path;
+
+    public function __construct()
+    {
+        $this->data_path = public_path(). '/data';
+    }
+
     /**
      * @param $data array;
+     * @return Json;
      */
     public function convertFormToJson($data) {
         $imgName = $this->saveImage($data['image']);
         $json = json_encode($this->formatJson($data, $imgName));
-        file_put_contents(public_path() .'/data/' .time() .$data['name'] .'.json', $json);
+        if (!file_exists($this->data_path)) {
+            File::makeDirectory($this->data_path, 0777, true, true);
+        }
+        file_put_contents($this->data_path . "/" .time() .$data['name'] .'.json', $json);
         return $json;
     }
 

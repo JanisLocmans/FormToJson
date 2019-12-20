@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Handlers\FormToJsonHandler;
 use Illuminate\Http\Request;
 use  App\Http\Requests\RegisterPost;
+use Illuminate\Routing\Redirector;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class FormToJsonController extends Controller
 {
@@ -24,8 +27,7 @@ class FormToJsonController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function index()
     {
@@ -33,7 +35,8 @@ class FormToJsonController extends Controller
     }
 
     /**
-     * @param RegisterPost $request
+     * @param RegisterPost $request;
+     * @return Redirector;
      */
     public function register(RegisterPost $request)
     {
